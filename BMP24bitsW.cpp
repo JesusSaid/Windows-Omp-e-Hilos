@@ -3,35 +3,57 @@ Cargar y procesar imágenes BMP de 24bits con C++
 http://www.widget-101.com/
 Autor: Christiam Mena
 */
+
+#include <process.h>
 #include <Windows.h>
 #include <stdio.h>       
 #include "BMP.h"
 
-
+//Solo modifica el numero de hilos
 #define NUM_THREADS 8
 
-int main(int argc, char** argv)
-{
-	LARGE_INTEGER tinicio, tfin, frec;
-	double mcseg;
 
-	BMP bmp("federik.bmp");
-	//bmp.printHeader();
-	//bmp.blueChannel();
+unsigned __stdcall hilograyscale(void* param);
 
-	QueryPerformanceFrequency(&frec);
-	QueryPerformanceCounter(&tinicio);
+double timeval_diff(LARGE_INTEGER* a, LARGE_INTEGER* b) {
+	LARGE_INTEGER freq;
+	QueryPerformanceFrequency(&freq);
+	return (double)(a->QuadPart - b->QuadPart) / freq.QuadPart;
+}
 
-	bmp.fromRGBtoGRAY();
+int main(int argc, char** argv) {
+    LARGE_INTEGER t_ini, t_fin;
+    double secs;
+    BMP bmp("nature.bmp");
 
+    QueryPerformanceCounter(&t_ini);
 
-	QueryPerformanceCounter(&tfin);
+    HANDLE threads[NUM_THREADS]; // Array para almacenar los identificadores de los hilos
 
-	mcseg = (double)(tfin.QuadPart - tinicio.QuadPart);
-	mcseg = mcseg / frec.QuadPart;
-	printf("%lf\n", mcseg*1000);
-	bmp.save("gris.bmp");
+    // Creamos 8 hilos adicionales para procesamiento en paralelo
+    for (int i = 0; i < NUM_THREADS; ++i) {
+        threads[i] = (HANDLE)_beginthreadex(NULL, 0, hilograyscale, &bmp, 0, NULL);
+    }
 
-	//getchar();  // Con esta línea evitaremos que se cierre la consola
+    // Esperamos a que todos los hilos terminen
+    WaitForMultipleObjects(NUM_THREADS, threads, TRUE, INFINITE);
+
+    for (int i = 0; i < NUM_THREADS; ++i) {
+        CloseHandle(threads[i]);
+    }
+
+    QueryPerformanceCounter(&t_fin);
+
+    secs = timeval_diff(&t_fin, &t_ini);
+    printf("%.10g\n", secs * 1000.0);
+
+    bmp.save("grises.bmp");
+
+    return 0;
+}
+
+unsigned __stdcall hilograyscale(void* param) {
+	BMP* bmp = (BMP*)param;
+	bmp->fromRGBtoGRAY();
 	return 0;
 }

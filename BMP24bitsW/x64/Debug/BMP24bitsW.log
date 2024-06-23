@@ -1,5 +1,4 @@
 ﻿  BMP.cpp
-  BMP24bitsW.cpp
 C:\Users\52953\Documents\UTM\8voUTM\Paralelo\BMP24bitsW\BMP.cpp(126,20): warning C4018: '<': no coinciden signed/unsigned
 C:\Users\52953\Documents\UTM\8voUTM\Paralelo\BMP24bitsW\BMP.cpp(127,21): warning C4018: '<': no coinciden signed/unsigned
 C:\Users\52953\Documents\UTM\8voUTM\Paralelo\BMP24bitsW\BMP.cpp(146,20): warning C4018: '<': no coinciden signed/unsigned
@@ -12,5 +11,6 @@ C:\Users\52953\Documents\UTM\8voUTM\Paralelo\BMP24bitsW\BMP.cpp(202,20): warning
 C:\Users\52953\Documents\UTM\8voUTM\Paralelo\BMP24bitsW\BMP.cpp(203,21): warning C4018: '<': no coinciden signed/unsigned
 C:\Users\52953\Documents\UTM\8voUTM\Paralelo\BMP24bitsW\BMP.cpp(220,20): warning C4018: '<': no coinciden signed/unsigned
 C:\Users\52953\Documents\UTM\8voUTM\Paralelo\BMP24bitsW\BMP.cpp(221,21): warning C4018: '<': no coinciden signed/unsigned
+  BMP24bitsW.cpp
   Generando código...
   BMP24bitsW.vcxproj -> C:\Users\52953\Documents\UTM\8voUTM\Paralelo\BMP24bitsW\x64\Debug\BMP24bitsW.exe

@@ -144,7 +144,7 @@ void BMP::fromRGBtoGRAY(void)
 	BYTE intensity = 0;
 	//#pragma omp parallel for 
 	for (int y = 0; y < header.height; y++) {
-	#pragma omp parallel for 
+	//#pragma omp parallel for 
 		for (int x = 0; x < header.width; x++) {
 
 			Color color = getPixel(x, y);
